@@ -1,20 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
+import MainTab from './navigation/tabs/MainTab';
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Hola, Coder!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <MainTab/>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
