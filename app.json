@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "react-native",
-    "slug": "react-native",
-    "version": "1.0.0",
+    "name": "react-demo-macha",
+    "slug": "react-demo-macha",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
