@@ -1,7 +1,7 @@
 
 import {View, Text} from 'react-native';
 
-const Detail = ({navigation, route}) => {
+const Detail = ({ route}) => {
 
   const {item} = route.params;
 

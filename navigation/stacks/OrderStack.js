@@ -14,7 +14,7 @@ const OrderStack = () => {
         
       >
         <Stack.Screen 
-        name='Orders' 
+        name='Orders Tab' 
         component={Orders}
         options={{ title: 'Orders' }} />
        

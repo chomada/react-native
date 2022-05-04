@@ -14,7 +14,7 @@ const CartStack = () => {
         
       >
         <Stack.Screen 
-        name='Cart' 
+        name='Cart Tab' 
         component={Cart}
         options={{ title: 'Cart' }} />
        
