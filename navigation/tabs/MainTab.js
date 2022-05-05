@@ -7,7 +7,7 @@ import OrderStack from '../stacks/OrderStack';
 const MainTab = () => {
     const Tab = createBottomTabNavigator();
   return (
-    <NavigationContainer>
+    
         <Tab.Navigator
         screenOptions={{headerShown:false}}
         >
@@ -17,7 +17,7 @@ const MainTab = () => {
 
         </Tab.Navigator>
       
-    </NavigationContainer>
+    
   )
 }
 

@@ -1,10 +1,7 @@
-
-import MainTab from './navigation/tabs/MainTab';
-
-
+import MainNavigation from './navigation/MainNavigation';
 export default function App() {
   return (
-    <MainTab/>
+    <MainNavigation/>
   );
 }
 
