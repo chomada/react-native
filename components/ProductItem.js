@@ -1,4 +1,4 @@
-import {  View,Text , TouchableOpacity } from 'react-native'
+import {  View,Text , TouchableOpacity,Image } from 'react-native'
 
 
 const ProductItem = ({item,onSelected}) => {
@@ -13,7 +13,7 @@ const ProductItem = ({item,onSelected}) => {
             >
                 <View>
                     <Text>
-                        {item.title}
+                        {item.nombre}
                     </Text>
                 </View>
              

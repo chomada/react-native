@@ -34,11 +34,12 @@ const Auth = () => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     console.log(errorCode, errorMessage);
+                    setEmail("");
+                    setPassword("");
                     // ..
                 })
                 .finally(()=> {
-                    setEmail("");
-                    setPassword("");
+                    
                 })
         }
 
@@ -56,10 +57,11 @@ const Auth = () => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     console.log(errorCode, errorMessage);
-                })
-                .finally(()=> {
                     setEmail("");
                     setPassword("");
+                })
+                .finally(()=> {
+                    
                 })
         }
     }
