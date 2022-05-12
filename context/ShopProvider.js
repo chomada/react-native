@@ -9,19 +9,29 @@ const ShopProvider = ({children}) => {
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
   const [cart, setCart] = useState([])
+  const [orders, setOrders] = useState([])
+
 
   useEffect(()=> {
 
       (async ()=>{
           const queryCollection = query(collection(db, "productos"))
           const queryCollectionCategories = query(collection(db, "categories"))
+          const queryCollectionOrders = query(collection(db, "orders"))
           const querySnapshot = await getDocs(queryCollection);
           const querySnapshotCategories = await getDocs(queryCollectionCategories)
+          const querySnapshotOrders = await getDocs(queryCollectionOrders)
+
           const productos = []
           querySnapshot.forEach((doc)=> {
               const producto = {id: doc.id, ...doc.data()}
               productos.push(producto)
           })
+          const ordenes=[]
+          querySnapshotOrders.forEach((doc)=> {
+            const orden = {id: doc.id, ...doc.data()}
+            ordenes.push(orden)
+        })
 
           const categories = []
           querySnapshotCategories.forEach((doc)=> {
@@ -31,6 +41,8 @@ const ShopProvider = ({children}) => {
 
           setProducts([...productos])
           setCategories([...categories])
+          setOrders([...ordenes])
+          console.log("productos: ",productos,"categorias: ",categories,"ordenes: ",ordenes)
       })()
 
   }, [])
@@ -55,59 +67,34 @@ const ShopProvider = ({children}) => {
 const isInCart = (producto) => {
     return cart.find(elemento => elemento.id === producto.id);
 }
+const sumaTotal = () => {
+  const suma = cart.reduce((acc, item) => acc += (item.price * item.quantity), 0)
+  return suma;
+}
+
+const conteoItems = () => {
+  const suma = cart.reduce((acc, item) => acc += (item.quantity), 0)
+  return suma;
+}
+
+const removeItem = (id) => {
+  const auxCart = cart.filter(item => item.id !== id);
+  setCart(auxCart);
+}
 
 
-// const [equipo,setEquipo]=useState([]);
-// const[contador,setContador]=useState(0);
-// const [total,setTotal] =useState(0);
-// const[elegido,setElegido]=useState('');
-// const[equipoGanador,setEquipoGanador]=useState([]);
-
-//   const addToTeam=(personaje)=>{
-//     setContador(contador+1)
-//     setEquipo([...equipo,personaje])
-//     setEquipoGanador([...equipoGanador,personaje])
-    
-//   }
-
-//   const clearTeam=()=>{
-//     setEquipo([]);
-//     setEquipoGanador([]);
-//     setContador(0);
-//   }
-
-//   const removeCharacter=(personaje)=>{
-//     const cartFiltrado = equipo.filter(elemento => elemento.id !== personaje.id);
-//     setEquipo(cartFiltrado);
-//     setEquipoGanador(cartFiltrado);
-//     setContador(contador-1)
-
-//   }
-//   const totalPower = ()=>{
-//     const suma = equipo.reduce((acc, item) => acc += (item.power), 0)
-    
-//     setTotal(suma)
-
-//   }
-//   const elegirPersonaje=(personaje)=>{
-//     if(personaje.id!==635){
-      
-//       setElegido(personaje)
-      
-//     }
-//   }
-//   const removeElegido=(personaje)=>{
-//     let newTeam=equipo.filter(per=>per.id!==personaje.id)
-//     setEquipo(newTeam);
-    
-    
-//   }
   return (
     <Shop.Provider value={{
       
       products,
       categories,
+      orders,
+      cart,
+      sumaTotal,
+      conteoItems,
+      removeItem,
       addCart
+
       
     }}>
       {children}
