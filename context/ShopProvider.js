@@ -82,7 +82,7 @@ const removeItem = (id) => {
   setCart(auxCart);
 }
 
-
+console.log("holi")
   return (
     <Shop.Provider value={{
       
