@@ -40,7 +40,7 @@ const Cart = () => {
         nombre: nombre,
         direccion: direccion,
       },
-      usuario:value.usuario,
+      usuario: value.usuario,
       items: value.cart
       ,
       total: total,
@@ -81,7 +81,7 @@ const Cart = () => {
             }
             setCheckoutText(`Out of stock: ${mensaje}`)
           }
-    
+
 
           setLoadingCheckout(false)
         })
@@ -91,7 +91,7 @@ const Cart = () => {
   return (
     <View style={Global.container}
     >
-                            <ImageBackground source={require("./../assets/ps52.jpg")} resizeMode="cover" style={Global.image}></ImageBackground>
+      <ImageBackground source={require("./../assets/ps52.jpg")} resizeMode="cover" style={Global.image}></ImageBackground>
 
       {value.cart.length !== 0 ?
         <>
@@ -103,16 +103,16 @@ const Cart = () => {
           </FlatList>
           <View>
             <Text>Total: {(total.toFixed(1))}</Text>
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
-              <Text style={Global.btn}
->Purchase</Text>
+            <TouchableOpacity style={Global.btnPurchase} onPress={() => setModalVisible(true)}>
+              <Text style={Global.textButton}
+              >Purchase</Text>
             </TouchableOpacity>
           </View>
         </>
         :
         <Text style={Global.title}>Cart empty...</Text>
       }
-      
+
       <Modal
         animationType='slide'
         transparent={true}
@@ -126,25 +126,29 @@ const Cart = () => {
             <TouchableOpacity onPress={() => setModalVisible(false)}>
               <Text style={Global.close} >X</Text>
             </TouchableOpacity>
+            <Text style={Global.textButton} >Complete please</Text>
+
             <TextInput style={Global.input}
               placeholder='Enter your name'
+              placeholderTextColor ='gray'
               onChangeText={setNombre}
               value={nombre}
             />
             <TextInput style={Global.input}
               placeholder='Enter your address'
+              placeholderTextColor ='gray'
               onChangeText={setDireccion}
               value={direccion}
             />
             <Text>Are you sure?</Text>
             <TouchableOpacity style={Global.btn} onPress={() => setModalVisible(false)}>
-              <Text>Cancel</Text>
+              <Text style={Global.textButton} >Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handlePurchase}>
-              <Text style={Global.btn} >Confirm</Text>
+              <Text style={Global.btnPurchase} >Confirm</Text>
             </TouchableOpacity>
             {loadingCheckout && <ActivityIndicator size={'small'} color={"green"} />}
-            {!loadingCheckout && <Text>{checkoutText}</Text>}
+            {!loadingCheckout && <Text style={Global.textButton}>{checkoutText}</Text>}
           </View>
         </View>
       </Modal>

@@ -78,7 +78,7 @@ export default StyleSheet.create({
   modalContainer: {
     height: 500,
     width: 320,
-    backgroundColor: 'orange',
+    backgroundColor: 'black',
     padding: 20,
     flex: 1,
     justifyContent: 'center',
@@ -98,7 +98,7 @@ export default StyleSheet.create({
     padding: 15,
     margin: 10,
     backgroundColor: 'red',
-    borderRadius: 15,
+    borderRadius: 50,
     width: 200,
     textAlign: 'center',
     color: 'white',
@@ -109,6 +109,7 @@ export default StyleSheet.create({
     fontSize: 20,
     textAlign: 'right',
     width: 250,
+    color:'white'
 
   },
   input: {

@@ -37,7 +37,7 @@ export default ItemCount;
 const styles = StyleSheet.create({
 
     flexi:{
-        margin:" auto",
+        
         display:"flex",
         flexDirection:"row",
         alignItems:'center',
