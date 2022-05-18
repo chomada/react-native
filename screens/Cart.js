@@ -70,6 +70,8 @@ const Cart = () => {
             addDoc(collection(db, 'orders'), orderGenerada).then(({ id }) => {
               batch.commit().then(() => {
                 setCheckoutText(`Generate order with Id: ${id}`)
+                value.clearCart();
+
               })
             }).catch((err) => {
               setCheckoutText(`Error: ${err.message}`)
