@@ -1,6 +1,6 @@
 import React, { createContext, useState,useEffect } from 'react'
 import { db } from "../firebase/Config";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 export const Shop = createContext()
 
@@ -9,7 +9,7 @@ const ShopProvider = ({children}) => {
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
   const [cart, setCart] = useState([])
-  const [orders, setOrders] = useState([])
+  const [usuario, setUsuario] = useState([])
 
 
   useEffect(()=> {
@@ -17,22 +17,14 @@ const ShopProvider = ({children}) => {
       (async ()=>{
           const queryCollection = query(collection(db, "productos"))
           const queryCollectionCategories = query(collection(db, "categories"))
-          const queryCollectionOrders = query(collection(db, "orders"))
           const querySnapshot = await getDocs(queryCollection);
           const querySnapshotCategories = await getDocs(queryCollectionCategories)
-          const querySnapshotOrders = await getDocs(queryCollectionOrders)
-
           const productos = []
           querySnapshot.forEach((doc)=> {
               const producto = {id: doc.id, ...doc.data()}
               productos.push(producto)
           })
-          const ordenes=[]
-          querySnapshotOrders.forEach((doc)=> {
-            const orden = {id: doc.id, ...doc.data()}
-            ordenes.push(orden)
-        })
-
+ 
           const categories = []
           querySnapshotCategories.forEach((doc)=> {
               const category = {id: doc.id, ...doc.data()}
@@ -41,16 +33,13 @@ const ShopProvider = ({children}) => {
 
           setProducts([...productos])
           setCategories([...categories])
-          setOrders([...ordenes])
-          console.log("productos: ",productos,"categorias: ",categories,"ordenes: ",ordenes)
+          
       })()
 
   }, [])
-  console.log(cart)
   const addCart = (product, quantityToAdd) => {
 
     const producto = isInCart(product);
-    console.log(producto);
     if (producto) {
         producto.quantity += quantityToAdd;
         const cartFiltrado = cart.filter(elemento => elemento.id !== producto.id);
@@ -81,19 +70,27 @@ const removeItem = (id) => {
   const auxCart = cart.filter(item => item.id !== id);
   setCart(auxCart);
 }
+const userMail=(user)=>{
+  setUsuario(user)
 
-console.log("holi")
+}
+const clearCart =()=>{
+  setCart([]);
+}
+
   return (
     <Shop.Provider value={{
       
       products,
       categories,
-      orders,
       cart,
+      usuario,
       sumaTotal,
       conteoItems,
       removeItem,
-      addCart
+      addCart,
+      userMail,
+      clearCart
 
       
     }}>

@@ -13,11 +13,29 @@ const CategoryStack = () => {
     
 
     <Stack.Navigator
-      initialRouteName="Categories"
+      initialRouteName="Games"
     >
-      <Stack.Screen name='Categories' component={Categories} options={{ title: 'Shop' }} />
-      <Stack.Screen name='Products' component={Products} options={({route})=>({ title: route.params.category })} />
-      <Stack.Screen name='Detail' component={Detail} options={({route})=>({ title: route.params.title })} />
+      <Stack.Screen name='Games' component={Categories} options={{ title: 'Games',headerStyle: {
+            backgroundColor: '#1D3557',
+          },
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold'
+          } }} />
+      <Stack.Screen name='Products' component={Products} options={({route})=>({ title: route.params.category,headerStyle: {
+            backgroundColor: '#1D3557',
+          },
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold'
+          } })} />
+      <Stack.Screen name='Detail' component={Detail} options={({route})=>({ title: route.params.title,headerStyle: {
+            backgroundColor: '#1D3557',
+          },
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold'
+          } })} />
 
     </Stack.Navigator>
 

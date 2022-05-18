@@ -16,7 +16,14 @@ const OrderStack = () => {
         <Stack.Screen 
         name='Orders Tab' 
         component={Orders}
-        options={{ title: 'Orders' }} />
+        options={{ title: 'Orders',
+        headerStyle: {
+          backgroundColor: '#FAE48BFF',
+        },
+        headerTintColor: '#666',
+        headerTitleStyle: {
+          fontWeight: 'bold'
+        } }} />
        
       </Stack.Navigator>
     

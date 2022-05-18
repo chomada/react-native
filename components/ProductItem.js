@@ -1,6 +1,5 @@
-import {  View,Text , TouchableOpacity,Image } from 'react-native'
-
-
+import {  StyleSheet, View,Text , TouchableOpacity,Image } from 'react-native'
+import Global from '../styles/Global';
 const ProductItem = ({item,onSelected}) => {
 
     
@@ -12,9 +11,17 @@ const ProductItem = ({item,onSelected}) => {
               onPress={() => onSelected(item)}
             >
                 <View>
-                    <Text>
+                    <Text style ={Global.title}>
                         {item.nombre}
                     </Text>
+                    <Image source={{ uri: item.image }}
+                    resizeMode = "cover"
+        style={{
+          height: 150,
+          
+          borderRadius: 5
+
+        }}/>
                 </View>
              
             </TouchableOpacity>

@@ -1,8 +1,8 @@
-import { ActivityIndicator, FlatList, Modal, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, FlatList, Modal, ImageBackground, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { Shop } from '../context/ShopProvider'
 import CartItem from '../components/CartItem'
-import { colors } from '../styles/Global'
+import Global from '../styles/Global';
 import { addDoc, collection, doc, getDoc, writeBatch } from 'firebase/firestore'
 import { db } from '../firebase/Config'
 
@@ -31,16 +31,16 @@ const Cart = () => {
   }, [value.cart])
 
   const handlePurchase = () => {
-    // console.log("Se realizo la compra");
-    // console.log(nombre, direccion);
+
     if (nombre === "" || direccion === "") {
       return
     }
     const orderGenerada = {
       buyer: {
         nombre: nombre,
-        direccion: direccion
+        direccion: direccion,
       },
+      usuario:value.usuario,
       items: value.cart
       ,
       total: total,
@@ -65,15 +65,13 @@ const Cart = () => {
           } else {
             outOfStock.push({ id: documentSnapshot.id, ...documentSnapshot.data() })
           }
-          console.log(outOfStock);
 
           if (outOfStock.length === 0) {
             addDoc(collection(db, 'orders'), orderGenerada).then(({ id }) => {
               batch.commit().then(() => {
-                setCheckoutText(`Se genero la order con id:  + ${id}`)
+                setCheckoutText(`Generate order with Id: ${id}`)
               })
             }).catch((err) => {
-              console.log(`Error: ${err.message}`);
               setCheckoutText(`Error: ${err.message}`)
             })
           } else {
@@ -81,8 +79,9 @@ const Cart = () => {
             for (const producto of outOfStock) {
               mensaje += `${producto.nombre} `
             }
-            setCheckoutText(`Productos fuera de stock: ${mensaje}`)
+            setCheckoutText(`Out of stock: ${mensaje}`)
           }
+    
 
           setLoadingCheckout(false)
         })
@@ -90,10 +89,12 @@ const Cart = () => {
   }
 
   return (
-    <View>
+    <View style={Global.container}
+    >
+                            <ImageBackground source={require("./../assets/ps52.jpg")} resizeMode="cover" style={Global.image}></ImageBackground>
+
       {value.cart.length !== 0 ?
         <>
-          <Text>Cart</Text>
           <FlatList
             data={value.cart}
             keyExtractor={item => item.id}
@@ -103,14 +104,15 @@ const Cart = () => {
           <View>
             <Text>Total: {(total.toFixed(1))}</Text>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
-              <Text>Purchase</Text>
+              <Text style={Global.btn}
+>Purchase</Text>
             </TouchableOpacity>
           </View>
         </>
         :
-        <Text>No hay productos en el cart</Text>
+        <Text style={Global.title}>Cart empty...</Text>
       }
-      {/* Este modal debería ser un componente aparte */}
+      
       <Modal
         animationType='slide'
         transparent={true}
@@ -119,48 +121,37 @@ const Cart = () => {
           setModalVisible(false)
         }}
       >
-        <View style={styles.modalParent}>
-          <View style={styles.modalContainer}>
+        <View style={Global.modalParent}>
+          <View style={Global.modalContainer}>
             <TouchableOpacity onPress={() => setModalVisible(false)}>
-              <Text>X</Text>
+              <Text style={Global.close} >X</Text>
             </TouchableOpacity>
-            <TextInput 
-              placeholder='Ingresar nombre'
+            <TextInput style={Global.input}
+              placeholder='Enter your name'
               onChangeText={setNombre}
               value={nombre}
             />
-            <TextInput 
-              placeholder='Ingresar direccion'
+            <TextInput style={Global.input}
+              placeholder='Enter your address'
               onChangeText={setDireccion}
               value={direccion}
             />
-            <Text>¿Quieres confirmar la compra?</Text>
-            <TouchableOpacity onPress={() => setModalVisible(false)}>
-              <Text>Cancelar</Text>
+            <Text>Are you sure?</Text>
+            <TouchableOpacity style={Global.btn} onPress={() => setModalVisible(false)}>
+              <Text>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handlePurchase}>
-              <Text>Confirmar</Text>
+              <Text style={Global.btn} >Confirm</Text>
             </TouchableOpacity>
-            {loadingCheckout && <ActivityIndicator size={'small'} color={"green"}/>}
+            {loadingCheckout && <ActivityIndicator size={'small'} color={"green"} />}
             {!loadingCheckout && <Text>{checkoutText}</Text>}
           </View>
         </View>
       </Modal>
+
     </View>
   )
 }
 
-export default Cart
+export default Cart;
 
-const styles = StyleSheet.create({
-  modalParent: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  modalContainer: {
-    height: 500,
-    width: 300,
-    backgroundColor: 'pink'
-  }
-})

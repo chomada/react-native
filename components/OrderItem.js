@@ -1,14 +1,13 @@
-import {  Text, TouchableOpacity, View } from 'react-native'
-
+import {  Text, TouchableOpacity, View,StyleSheet } from 'react-native'
+import Global from '../styles/Global';
 const OrderItem = ({item}) => {
 
   return (
     <View>
-    <TouchableOpacity >
-        <Text>Orden:{item.buyer.nombre}, {item.buyer.direccion}</Text>
-    </TouchableOpacity>
+        <Text style={Global.orderTitle}>Date: {item.createdAt}, Total: ${item.total}</Text>
   </View>
   )
 }
 
 export default OrderItem;
+

@@ -1,18 +1,10 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { StyleSheet,ImageBackground, Button,Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { createUserWithEmailAndPassword,signInWithEmailAndPassword  } from 'firebase/auth';
 import { auth } from '../firebase/Config';
-import Global,{ colors } from '../styles/Global';
+import Global from '../styles/Global';
 
-const colorPrueba= StyleSheet.create({
-    prueba:{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'violet'
-    }
 
-});
 
 const Auth = () => {
 
@@ -26,14 +18,12 @@ const Auth = () => {
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     // Signed in 
-                    console.log(userCredential)
                     const user = userCredential.user;
                     // ...
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    console.log(errorCode, errorMessage);
                     setEmail("");
                     setPassword("");
                     // ..
@@ -50,13 +40,11 @@ const Auth = () => {
                 .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
-                    console.log(user);
                     // ...
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    console.log(errorCode, errorMessage);
                     setEmail("");
                     setPassword("");
                 })
@@ -66,35 +54,47 @@ const Auth = () => {
         }
     }
   return (
-    <View style={Global.container}>
+    <View  style={Global.container}>
+        <ImageBackground source={require("./../assets/ps5.jpg")} resizeMode="cover" style={Global.image}></ImageBackground>
         <View>
-            <Text style={Global.titulo}>{loginView?'Login':'Registro de usuario'}</Text>
+            <Text style={Global.title}>{loginView?'Login':'Register'}</Text>
         <TextInput
-                    
+                    style={Global.input}
+
                     value={email}
                     onChangeText={setEmail}
-                    placeholder="Ingrese email"
+                    placeholder="Enter your mail"
+                    placeholderTextColor ='gray'
+
+                    
                 ></TextInput>
                  <TextInput
-                    
+                    style={Global.input}
+
                     secureTextEntry={true}
                     value={password}
                     onChangeText={setPassword}
-                    placeholder="Ingrese password"
+                    placeholder="Enter your password"
+                    placeholderTextColor ='gray'
                 ></TextInput>
                 {loginView?<TouchableOpacity onPress={handleLogin}>
-                    <Text>Login</Text>
+                    <Text style={Global.btn}
+>Login</Text>
                 </TouchableOpacity>:<TouchableOpacity onPress={handleSignUp}>
-                    <Text>Sign Up</Text>
+                    <Text style={Global.btn}
+>Sign Up</Text>
                 </TouchableOpacity>}
                 <View>
-                <Text>{loginView ? 'No tienes usuario?' : 'Ya tienes usuario?'}</Text>
-                    <TouchableOpacity
+                <Text style={Global.textWhite}>{loginView ? 'New to native?' : 'Already have an account?'}</Text>
+                    <Button
+                        title={loginView ? 'Sign up' : 'Sign in'}
+
                         onPress={() => setLoginView(!loginView)}>
-                        <Text style={{color:colors.darkBlue}}>
-                            {loginView ? 'Sign up' : 'Sign in'}
+                        <Text style={Global.marginer}>
+                            
                         </Text>
-                    </TouchableOpacity>
+
+                    </Button>
                 </View>
 
         </View>
@@ -103,5 +103,5 @@ const Auth = () => {
   )
 }
 
-export default Auth
+export default Auth;
 

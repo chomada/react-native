@@ -1,9 +1,9 @@
 import { useEffect, useState,useContext } from 'react';
-import { View, Text, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native'
+import { ImageBackground, View, Text, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native'
 import ProductItem from '../components/ProductItem';
 import {Shop} from '../context/ShopProvider';
 
-
+import Global from '../styles/Global';
 const Products = ({ navigation, route }) => {
 
   const { category } = route.params;
@@ -34,8 +34,9 @@ const Products = ({ navigation, route }) => {
     })
   }
   return (
-    <View>
-      <Text>Products</Text>
+    <View style ={Global.container}>
+              <ImageBackground source={require("./../assets/ps52.jpg")} resizeMode="cover" style={Global.image}></ImageBackground>
+
       {products.length !== 0 ?
         <FlatList
           data={productFilter}
@@ -50,4 +51,4 @@ const Products = ({ navigation, route }) => {
   )
 }
 
-export default Products
+export default Products;
