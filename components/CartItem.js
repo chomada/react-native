@@ -23,7 +23,7 @@ const CartItem = ({ item, handleRemove }) => {
       <Text style={styles.textButton}
       > total: ${item.price * item.quantity}</Text>
       <TouchableOpacity style={Global.btn} onPress={() => handleRemove(item.id)}>
-        <Text style={Global.textButton}>Eliminar</Text>
+        <Text style={Global.textButton}>Delete</Text>
       </TouchableOpacity>
     </View>
   )

@@ -66,28 +66,29 @@ const Cart = () => {
             outOfStock.push({ id: documentSnapshot.id, ...documentSnapshot.data() })
           }
 
-          if (outOfStock.length === 0) {
-            addDoc(collection(db, 'orders'), orderGenerada).then(({ id }) => {
-              batch.commit().then(() => {
-                setCheckoutText(`Generate order with Id: ${id}`)
-                value.clearCart();
-
-              })
-            }).catch((err) => {
-              setCheckoutText(`Error: ${err.message}`)
-            })
-          } else {
-            let mensaje = ''
-            for (const producto of outOfStock) {
-              mensaje += `${producto.nombre} `
-            }
-            setCheckoutText(`Out of stock: ${mensaje}`)
-          }
-
-
-          setLoadingCheckout(false)
+        
         })
     })
+    if (outOfStock.length === 0) {
+      addDoc(collection(db, 'orders'), orderGenerada).then(({ id }) => {
+        batch.commit().then(() => {
+          setCheckoutText(`Generate order with Id: ${id}`)
+          value.clearCart();
+
+        })
+      }).catch((err) => {
+        setCheckoutText(`Error: ${err.message}`)
+      })
+    } else {
+      let mensaje = ''
+      for (const producto of outOfStock) {
+        mensaje += `${producto.nombre} `
+      }
+      setCheckoutText(`Out of stock: ${mensaje}`)
+    }
+
+
+    setLoadingCheckout(false)
   }
 
   return (
